@@ -1,9 +1,29 @@
 import React,{useEffect} from 'react'
-import { useQuery } from '@apollo/client';
+import { useMutation, useQuery } from '@apollo/client';
 import { GET_ALL_USERS } from '../gqloperations/queries';
+import { DELETE_USER } from '../gqloperations/mutations';
+export default function GetUsers({ userId }) {
+   const {loading,error,data} = useQuery(GET_ALL_USERS);
+   const [deleteUser] = useMutation(DELETE_USER, {
+    refetchQueries: [{ query: GET_ALL_USERS }],
+  });
+  const handleDelete = async (userId) => {
+    try {
+      const { data } = await deleteUser({
+        variables: {
+          userId,
+        },
+      });
 
-export default function GetUsers() {
-   const {loading,error,data} = useQuery(GET_ALL_USERS)
+      if (data.deleteUser) {
+        console.log('User deleted successfully');
+      } else {
+        console.log('Failed to delete user');
+      }
+    } catch (error) {
+      console.error('Error deleting user:', error);
+    }
+  };
 
    if(loading) return <h1>Loading</h1>
    if(error){
@@ -21,8 +41,14 @@ export default function GetUsers() {
                         <h6>{user.firstName}</h6>
                         <h6>{user.lastName}</h6>
                         <h6>{user.email}</h6>
+                        {user.quotes.map(quote=>{
+                             {console.log("QUOTESNAME",  quote.name)};
+                                return(
+                               <h6> <li> {quote.name}</li></h6>    
+                                )
+                        })}                       
                         <button>Assign task</button>
-                        {/* <p className="right-align">~{user}</p> */}
+                        <button className="right-align" onClick={() => handleDelete(user._id)}>Delete User</button>
                     </blockquote>
                     )
                 })

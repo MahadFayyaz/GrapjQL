@@ -4,11 +4,13 @@ const typeDefs = gql`
     users:[User]
     user(_id:ID!):User
     quotes:[QuoteWithName]
+    quote(_id:ID!):Quote
     iquote(by:ID!):[Quote]
     myprofile:User
  }
 
  type QuoteWithName{
+    _id:ID
      name:String
      length:String
      height:String  
@@ -30,6 +32,7 @@ const typeDefs = gql`
      quotes:[Quote]
  }
  type Quote{
+     _id: ID!
      name:String!
      length:String!
      width:String!
@@ -46,6 +49,9 @@ const typeDefs = gql`
      signupUser(userNew:UserInput!):User
      signinUser(userSignin:UserSigninInput!):Token
      createQuote(quoteNew:QuoteInput!):Quote
+     editQuote(quoteId: ID!, quoteUpdates: QuoteEditInput!): Quote
+     deleteQuote(quoteId: ID!): Boolean
+     deleteUser(userId: ID!): Boolean
  }
 
  input UserInput{
@@ -58,11 +64,17 @@ const typeDefs = gql`
     email:String!
     password:String!
  }
+ input QuoteEditInput{
+    length:String
+    width:String
+    height:String
+ }
+
  input QuoteInput{
     name:String!
-    length:String!
-    width:String!
-    height:String!
+    length:String
+    width:String
+    height:String
  }
 
 `

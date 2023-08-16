@@ -2,8 +2,10 @@ import React from 'react'
 import { useQuery } from '@apollo/client';
 import { GET_MY_PROFILE } from '../gqloperations/queries';
 import {useNavigate} from 'react-router-dom'
+import EditQuoteForm from './EditQuoteForm.js';
 export default function Profile() {
     const navigate  = useNavigate();
+    
     const {loading,error,data} = useQuery(GET_MY_PROFILE)
     if(!localStorage.getItem("token")){
             navigate("/login")
@@ -20,16 +22,12 @@ export default function Profile() {
                 <h5>{data.user.firstName} {data.user.lastName}</h5>
                 <h6>Email - {data.user.email}</h6>
             </div>
-             {/* <h3>Your quotes</h3>
-             {
-                 data.user.quotes.map(quo=>{
-                     return(
-                         <blockquote>
-                            <h6>{quo.name}</h6>
-                        </blockquote> 
-                     )
-                 })
-             } */}
+             <h3>Your quotes</h3>
+             {data.user.quotes.map((quote) => (
+                <EditQuoteForm
+                key={quote._id} quoteId={quote._id} quote={quote}
+                />
+      ))}
         </div>
     )
 }

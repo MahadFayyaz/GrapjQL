@@ -2,6 +2,7 @@ import {gql} from '@apollo/client'
 export const GET_ALL_QUOTES = gql`
 query getAllQuotes{
     quotes{
+      _id
       name
       length 
       width
@@ -16,9 +17,13 @@ query getAllQuotes{
 export const GET_ALL_USERS = gql`
 query getAllUsers{
     users{
+      _id
       firstName
       lastName
       email
+      quotes{
+        name
+      }
     }
   }
 `
@@ -26,10 +31,12 @@ query getAllUsers{
 export const GET_MY_PROFILE = gql`
   query getMyProfile{
     user:myprofile{
+      _id
       firstName
       lastName
       email
       quotes{
+        _id
         name
       }
     } 

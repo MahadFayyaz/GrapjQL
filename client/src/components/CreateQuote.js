@@ -41,10 +41,18 @@ export default function CreateQuote() {
                 <div className="red card-panel">{error.message}</div>
             }
             {
-                data && 
-                <div className="green card-panel">{data.quote}</div>
+                data && (
+                    <div className="green card-panel">
+                    <p>Name: {data.name}</p>
+                    <p>Length: {data.length}</p>
+                    <p>Width: {data.width}</p>
+                    <p>Height: {data.height}</p>
+                    {/* Render other fields as needed */}
+                  </div>
+                )
             }
             <form onSubmit={handleSubmit}>
+                <h4>Create Task!</h4>
                 <input 
                 type="text" 
                 name="name"
