@@ -16,6 +16,10 @@ const quoteSchema = new mongoose.Schema({
         type:String,
         required:true
     },
+    assignedTo: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'User', // This should match the model name for the User
+      },
    by:{
        type:mongoose.Schema.Types.ObjectId,
        ref:"User"

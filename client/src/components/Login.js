@@ -9,10 +9,10 @@ export default function Login() {
     const [signinUser,{error,loading,data}] = useMutation(LOGIN_USER,{
         onCompleted(data){
             localStorage.setItem("token",data.user.token)
-            navigate('/')
+            navigate('/');
         }
     })
-
+    
     if(loading) return <h1>Loading</h1>
 
     const handleChange = (e)=>{

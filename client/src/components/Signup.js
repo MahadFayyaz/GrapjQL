@@ -66,6 +66,19 @@ export default function Signup() {
                  onChange={handleChange}
                  required
                  /> 
+                  <label htmlFor="role">Role:</label>
+                <select
+                    className='dropdown-display'
+                    id="role"
+                    name="role"
+                    value={formData.role || ''}
+                    onChange={handleChange}
+                    required
+                >
+                    <option value="ADMIN">ADMIN</option>
+                    <option value="INSPECTOR">INSPECTOR</option>
+                </select>
+                <hr />
                  <button className="btn #673ab7 deep-purple" type="submit">Submit</button>
             </form>
         </div>

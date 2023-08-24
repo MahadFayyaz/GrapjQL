@@ -19,6 +19,15 @@ const resolvers = {
       if (!userId) throw new Error("You must be logged in");
       return await User.findOne({ _id: userId });
     },
+    quotesAssignedToUser: async (_, { userId }) => {
+      try {
+        const quotes = await Quote.find({ assignedTo: userId });
+        return quotes;
+      } catch (error) {
+        console.error(error);
+        return [];
+      }
+    },
   },
   User: {
     quotes: async (ur) => await Quote.find({ by: ur._id }),
@@ -34,6 +43,7 @@ const resolvers = {
       const newUser = new User({
         ...userNew,
         password: hashedPassword,
+        role: userNew.role || "INSPECTOR",
       });
       return await newUser.save();
     },
@@ -64,15 +74,16 @@ const resolvers = {
         return false; // Return false in case of errors
       }
     },
-    createQuote: async (_, { quoteNew }, { userId }) => {
-      //    if(!userId) throw new Error("You must be logged in")
+   
+    createQuote: async (_, { quoteNew, assignedToUserId }, { userId }) => {
       const newQuote = new Quote({
-        _id: new ObjectID(),
         ...quoteNew,
         by: userId,
+        assignedTo: assignedToUserId, // Associate the quote with the selected user
       });
-     return await newQuote.save();
+      return await newQuote.save();
     },
+    
     editQuote: async (_, { quoteId, quoteUpdates }) => {
       try {
         // Check if the provided quoteId is valid

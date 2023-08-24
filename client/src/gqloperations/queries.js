@@ -21,9 +21,21 @@ query getAllUsers{
       firstName
       lastName
       email
+      role
       quotes{
         name
       }
+    }
+  }
+`
+export const QUOTES_ASSIGNED_TO_USER = gql`
+  query QuotesAssignedToUser($userId: ID!) {
+    quotesAssignedToUser(userId: $userId) {
+      _id
+      name
+      length
+      width
+      height
     }
   }
 `
@@ -35,6 +47,7 @@ export const GET_MY_PROFILE = gql`
       firstName
       lastName
       email
+      role
       quotes{
         _id
         name
@@ -51,6 +64,7 @@ query getUserById($userid: ID!) {
     firstName
     lastName
     email
+    role
     quotes{
       name
     }

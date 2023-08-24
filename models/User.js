@@ -16,7 +16,12 @@ const userSchema = new mongoose.Schema({
         type:String,
         required:true
     },
-    
+    role: {
+        type: String,  // You can change this to match your enum type if needed
+        enum: ['ADMIN', 'INSPECTOR'], // Valid roles based on your enum
+        default: 'INSPECTOR', // Default value if not specified
+        required:true
+    }
 })
 
 mongoose.model("User",userSchema)

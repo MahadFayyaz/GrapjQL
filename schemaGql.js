@@ -7,6 +7,7 @@ const typeDefs = gql`
     quote(_id:ID!):Quote
     iquote(by:ID!):[Quote]
     myprofile:User
+    quotesAssignedToUser(userId: ID!): [Quote!]!
  }
 
  type QuoteWithName{
@@ -22,6 +23,10 @@ const typeDefs = gql`
      _id:String
      firstName:String
  }
+ enum UserRole {
+    ADMIN
+    INSPECTOR
+}
 
  type User{
      _id:ID!
@@ -29,6 +34,7 @@ const typeDefs = gql`
      lastName:String!
      email:String!
      password:String!
+     role: UserRole!
      quotes:[Quote]
  }
  type Quote{
@@ -37,6 +43,7 @@ const typeDefs = gql`
      length:String!
      width:String!
      height:String!
+     assignedTo: ID
      users:[User]
      by:ID!
  }
@@ -48,7 +55,7 @@ const typeDefs = gql`
  type Mutation{
      signupUser(userNew:UserInput!):User
      signinUser(userSignin:UserSigninInput!):Token
-     createQuote(quoteNew:QuoteInput!):Quote
+     createQuote(quoteNew: QuoteInput!, assignedToUserId: ID): Quote
      editQuote(quoteId: ID!, quoteUpdates: QuoteEditInput!): Quote
      deleteQuote(quoteId: ID!): Boolean
      deleteUser(userId: ID!): Boolean
@@ -59,6 +66,7 @@ const typeDefs = gql`
     lastName:String!
     email:String!
     password:String!
+    role:UserRole!
  }
  input UserSigninInput{
     email:String!

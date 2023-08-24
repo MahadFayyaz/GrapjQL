@@ -3,6 +3,7 @@ import { useQuery } from '@apollo/client';
 import { GET_MY_PROFILE } from '../gqloperations/queries';
 import {useNavigate} from 'react-router-dom'
 import EditQuoteForm from './EditQuoteForm.js';
+import QuotesAssignedToCurrentUser from './QuotesAssigned';
 export default function Profile() {
     const navigate  = useNavigate();
     
@@ -18,16 +19,19 @@ export default function Profile() {
     return (
         <div className="container my-container">
             <div className="center-align">
-                {/* <img className="circle" style={{border:"2px solid",marginTop:"10px"}} src={`https://robohash.org/${data.user.firstName}.png?size=200x200`} alt="pic" /> */}
+                <img className="circle" style={{border:"2px solid",marginTop:"10px"}} src={`https://robohash.org/${data.user.firstName}.png?size=200x200`} alt="pic" />
                 <h5>{data.user.firstName} {data.user.lastName}</h5>
                 <h6>Email - {data.user.email}</h6>
             </div>
-             <h3>Your quotes</h3>
+             {/* <h3>Your quotes</h3>
              {data.user.quotes.map((quote) => (
                 <EditQuoteForm
                 key={quote._id} quoteId={quote._id} quote={quote}
                 />
-      ))}
+           
+      ))} */}
+      {/* <h1>My Quotes assigned </h1> */}
+       <QuotesAssignedToCurrentUser />
         </div>
     )
 }

@@ -24,15 +24,16 @@ export const EDIT_QUOTE = gql`
     }
   }`
 
-export const CREATE_QUOTE = gql`
-  mutation createQuote($quoteNew:QuoteInput!){
-    quote:createQuote(quoteNew:$quoteNew){
+  export const CREATE_QUOTE = gql`
+  mutation CreateQuote($quoteNew: QuoteInput!, $assignedToUserId: ID) {
+    createQuote(quoteNew: $quoteNew, assignedToUserId: $assignedToUserId) {
+      _id
       name
       length
       width
       height
+      assignedTo
       by
-    
     }
   }
 `
